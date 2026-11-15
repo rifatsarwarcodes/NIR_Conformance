@@ -1,0 +1,25 @@
+{
+  "name": "if_v_reset",
+  "suite": "dt1",
+  "dt": 1.0,
+  "T": 100,
+  "B": 2,
+  "description": "IF with v_reset = -0.5*threshold.",
+  "targets": [
+    "v_reset handling"
+  ],
+  "spiking_output": true,
+  "input_shape": [
+    6
+  ],
+  "output_shape": [
+    8
+  ],
+  "seed": 14000,
+  "weight_scale": 0.19058883518013478,
+  "min_threshold_margin": 0.0003013983368873596,
+  "output_spike_rate": 0.1,
+  "nir_version_written": "1.0.8",
+  "convention": "reference (see docs/conventions.md)",
+  "legacy_file": "not expressible: non-zero v_reset does not exist in nir 1.0.4"
+}

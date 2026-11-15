@@ -1,0 +1,26 @@
+{
+  "name": "cubalif_v_leak",
+  "suite": "dt1",
+  "dt": 1.0,
+  "T": 100,
+  "B": 2,
+  "description": "CubaLIF with v_leak = 0.4*threshold. The synaptic current must still decay to 0.",
+  "targets": [
+    "v_leak handling",
+    "synapse leak"
+  ],
+  "spiking_output": true,
+  "input_shape": [
+    6
+  ],
+  "output_shape": [
+    8
+  ],
+  "seed": 18000,
+  "weight_scale": 2.3678234808601193,
+  "min_threshold_margin": 0.00038377429068492397,
+  "output_spike_rate": 0.101875,
+  "nir_version_written": "1.0.8",
+  "convention": "reference (see docs/conventions.md)",
+  "legacy_file": "written"
+}

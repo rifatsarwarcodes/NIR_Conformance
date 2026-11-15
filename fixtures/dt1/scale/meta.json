@@ -1,0 +1,25 @@
+{
+  "name": "scale",
+  "suite": "dt1",
+  "dt": 1.0,
+  "T": 100,
+  "B": 2,
+  "description": "Linear -> Scale -> LIF.",
+  "targets": [
+    "Scale support"
+  ],
+  "spiking_output": true,
+  "input_shape": [
+    6
+  ],
+  "output_shape": [
+    8
+  ],
+  "seed": 20000,
+  "weight_scale": 3.0869793907648195,
+  "min_threshold_margin": 0.0010010247934055805,
+  "output_spike_rate": 0.123125,
+  "nir_version_written": "1.0.8",
+  "convention": "reference (see docs/conventions.md)",
+  "legacy_file": "written"
+}

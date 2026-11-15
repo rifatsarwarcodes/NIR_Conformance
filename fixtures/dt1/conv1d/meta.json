@@ -1,0 +1,27 @@
+{
+  "name": "conv1d",
+  "suite": "dt1",
+  "dt": 1.0,
+  "T": 100,
+  "B": 2,
+  "description": "Conv1d (2->3, k=3, pad 1) -> IF.",
+  "targets": [
+    "Conv1d"
+  ],
+  "spiking_output": true,
+  "input_shape": [
+    2,
+    10
+  ],
+  "output_shape": [
+    3,
+    10
+  ],
+  "seed": 30000,
+  "weight_scale": 0.21761541677280677,
+  "min_threshold_margin": 0.0004564393311738968,
+  "output_spike_rate": 0.13566666666666666,
+  "nir_version_written": "1.0.8",
+  "convention": "reference (see docs/conventions.md)",
+  "legacy_file": "written"
+}

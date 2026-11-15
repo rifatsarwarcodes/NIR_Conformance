@@ -1,0 +1,25 @@
+{
+  "name": "fan_in",
+  "suite": "dt1e-4",
+  "dt": 0.0001,
+  "T": 100,
+  "B": 2,
+  "description": "Two Linear branches from the input summed into one LIF.",
+  "targets": [
+    "fan-in / non-chain graphs"
+  ],
+  "spiking_output": true,
+  "input_shape": [
+    6
+  ],
+  "output_shape": [
+    8
+  ],
+  "seed": 27000,
+  "weight_scale": 1.8162052047660289,
+  "min_threshold_margin": 0.0004664701390859616,
+  "output_spike_rate": 0.135625,
+  "nir_version_written": "1.0.8",
+  "convention": "reference (see docs/conventions.md)",
+  "legacy_file": "written"
+}

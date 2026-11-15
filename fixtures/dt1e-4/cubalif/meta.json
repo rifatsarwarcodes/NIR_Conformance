@@ -1,0 +1,25 @@
+{
+  "name": "cubalif",
+  "suite": "dt1e-4",
+  "dt": 0.0001,
+  "T": 100,
+  "B": 2,
+  "description": "Linear -> CubaLIF (r=1, w_in=1, v_leak=0).",
+  "targets": [
+    "CubaLIF baseline"
+  ],
+  "spiking_output": true,
+  "input_shape": [
+    6
+  ],
+  "output_shape": [
+    8
+  ],
+  "seed": 15000,
+  "weight_scale": 4.024557504407015,
+  "min_threshold_margin": 0.0002610425716738085,
+  "output_spike_rate": 0.115625,
+  "nir_version_written": "1.0.8",
+  "convention": "reference (see docs/conventions.md)",
+  "legacy_file": "written"
+}

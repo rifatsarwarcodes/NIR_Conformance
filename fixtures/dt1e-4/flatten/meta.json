@@ -1,0 +1,27 @@
+{
+  "name": "flatten",
+  "suite": "dt1e-4",
+  "dt": 0.0001,
+  "T": 100,
+  "B": 2,
+  "description": "Flatten(start_dim=0) over (2,3,3) -> Linear -> LIF. NIR dims exclude batch.",
+  "targets": [
+    "Flatten dims"
+  ],
+  "spiking_output": true,
+  "input_shape": [
+    2,
+    3,
+    3
+  ],
+  "output_shape": [
+    8
+  ],
+  "seed": 33000,
+  "weight_scale": 1.2200799922391072,
+  "min_threshold_margin": 0.0005144023995425906,
+  "output_spike_rate": 0.1075,
+  "nir_version_written": "1.0.8",
+  "convention": "reference (see docs/conventions.md)",
+  "legacy_file": "written"
+}

@@ -1,0 +1,25 @@
+{
+  "name": "linear",
+  "suite": "dt1",
+  "dt": 1.0,
+  "T": 100,
+  "B": 2,
+  "description": "Linear 3->5 (non-square). Catches transposed weights / swapped in/out features.",
+  "targets": [
+    "weight layout"
+  ],
+  "spiking_output": false,
+  "input_shape": [
+    3
+  ],
+  "output_shape": [
+    5
+  ],
+  "seed": 2000,
+  "weight_scale": 0.02,
+  "min_threshold_margin": null,
+  "output_spike_rate": null,
+  "nir_version_written": "1.0.8",
+  "convention": "reference (see docs/conventions.md)",
+  "legacy_file": "identical"
+}

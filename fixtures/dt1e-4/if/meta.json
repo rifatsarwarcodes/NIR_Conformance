@@ -1,0 +1,26 @@
+{
+  "name": "if",
+  "suite": "dt1e-4",
+  "dt": 0.0001,
+  "T": 100,
+  "B": 2,
+  "description": "Linear -> IF, positive weights.",
+  "targets": [
+    "IF baseline",
+    "IF input gain (dt*R)"
+  ],
+  "spiking_output": true,
+  "input_shape": [
+    6
+  ],
+  "output_shape": [
+    8
+  ],
+  "seed": 12000,
+  "weight_scale": 0.14618844572768416,
+  "min_threshold_margin": 0.0009321280757745716,
+  "output_spike_rate": 0.106875,
+  "nir_version_written": "1.0.8",
+  "convention": "reference (see docs/conventions.md)",
+  "legacy_file": "written"
+}

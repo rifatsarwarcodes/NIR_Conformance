@@ -1,0 +1,25 @@
+{
+  "name": "two_layer",
+  "suite": "dt1",
+  "dt": 1.0,
+  "T": 100,
+  "B": 2,
+  "description": "Linear -> LIF -> Linear -> LIF.",
+  "targets": [
+    "composition"
+  ],
+  "spiking_output": true,
+  "input_shape": [
+    6
+  ],
+  "output_shape": [
+    4
+  ],
+  "seed": 23000,
+  "weight_scale": 3.524730638368321,
+  "min_threshold_margin": 0.0008278658762574942,
+  "output_spike_rate": 0.13375,
+  "nir_version_written": "1.0.8",
+  "convention": "reference (see docs/conventions.md)",
+  "legacy_file": "written"
+}

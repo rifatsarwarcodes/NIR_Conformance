@@ -1,0 +1,25 @@
+{
+  "name": "delay",
+  "suite": "dt1",
+  "dt": 1.0,
+  "T": 100,
+  "B": 2,
+  "description": "Linear -> Delay (1-4 steps per neuron) -> LIF.",
+  "targets": [
+    "Delay support"
+  ],
+  "spiking_output": true,
+  "input_shape": [
+    6
+  ],
+  "output_shape": [
+    8
+  ],
+  "seed": 22000,
+  "weight_scale": 3.0869793907648195,
+  "min_threshold_margin": 0.0002732183654853282,
+  "output_spike_rate": 0.11375,
+  "nir_version_written": "1.0.8",
+  "convention": "reference (see docs/conventions.md)",
+  "legacy_file": "written"
+}

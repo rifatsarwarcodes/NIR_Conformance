@@ -1,0 +1,25 @@
+{
+  "name": "cubalif_w_in",
+  "suite": "dt1",
+  "dt": 1.0,
+  "T": 100,
+  "B": 2,
+  "description": "CubaLIF with w_in = 2 (elementwise input weight, #190).",
+  "targets": [
+    "w_in (#190)"
+  ],
+  "spiking_output": true,
+  "input_shape": [
+    6
+  ],
+  "output_shape": [
+    8
+  ],
+  "seed": 17000,
+  "weight_scale": 1.8162052047660289,
+  "min_threshold_margin": 0.0003151512243637633,
+  "output_spike_rate": 0.105625,
+  "nir_version_written": "1.0.8",
+  "convention": "reference (see docs/conventions.md)",
+  "legacy_file": "written"
+}

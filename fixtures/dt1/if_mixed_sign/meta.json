@@ -1,0 +1,25 @@
+{
+  "name": "if_mixed_sign",
+  "suite": "dt1",
+  "dt": 1.0,
+  "T": 100,
+  "B": 2,
+  "description": "IF with mixed-sign weights (membrane goes negative; no lower bound in NIR).",
+  "targets": [
+    "IF lower bound"
+  ],
+  "spiking_output": true,
+  "input_shape": [
+    6
+  ],
+  "output_shape": [
+    8
+  ],
+  "seed": 13000,
+  "weight_scale": 0.36987797685388296,
+  "min_threshold_margin": 0.003952581435441971,
+  "output_spike_rate": 0.103125,
+  "nir_version_written": "1.0.8",
+  "convention": "reference (see docs/conventions.md)",
+  "legacy_file": "written"
+}

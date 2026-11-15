@@ -1,0 +1,29 @@
+{
+  "name": "conv2d_stride",
+  "suite": "dt1e-4",
+  "dt": 0.0001,
+  "T": 100,
+  "B": 2,
+  "description": "Conv2d (2->3, 3x3, stride 2, no pad) -> IF, 7x7 input.",
+  "targets": [
+    "Conv2d stride/padding"
+  ],
+  "spiking_output": true,
+  "input_shape": [
+    2,
+    7,
+    7
+  ],
+  "output_shape": [
+    3,
+    3,
+    3
+  ],
+  "seed": 29000,
+  "weight_scale": 0.0506029016195824,
+  "min_threshold_margin": 0.00017134251971522515,
+  "output_spike_rate": 0.1187037037037037,
+  "nir_version_written": "1.0.8",
+  "convention": "reference (see docs/conventions.md)",
+  "legacy_file": "written"
+}

@@ -1,0 +1,25 @@
+{
+  "name": "recurrent_cubalif",
+  "suite": "dt1e-4",
+  "dt": 0.0001,
+  "T": 100,
+  "B": 2,
+  "description": "Affine -> CubaLIF with a recurrent Linear.",
+  "targets": [
+    "recurrence timing"
+  ],
+  "spiking_output": true,
+  "input_shape": [
+    6
+  ],
+  "output_shape": [
+    8
+  ],
+  "seed": 26000,
+  "weight_scale": 3.524730638368321,
+  "min_threshold_margin": 0.0006717501017363681,
+  "output_spike_rate": 0.110625,
+  "nir_version_written": "1.0.8",
+  "convention": "reference (see docs/conventions.md)",
+  "legacy_file": "written"
+}

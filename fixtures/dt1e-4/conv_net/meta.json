@@ -1,0 +1,27 @@
+{
+  "name": "conv_net",
+  "suite": "dt1e-4",
+  "dt": 0.0001,
+  "T": 100,
+  "B": 2,
+  "description": "Conv2d -> IF -> SumPool2d -> Flatten -> Affine -> LIF.",
+  "targets": [
+    "composition"
+  ],
+  "spiking_output": true,
+  "input_shape": [
+    1,
+    6,
+    6
+  ],
+  "output_shape": [
+    4
+  ],
+  "seed": 34001,
+  "weight_scale": 0.12803268261605671,
+  "min_threshold_margin": 0.00010772783115687109,
+  "output_spike_rate": 0.14625,
+  "nir_version_written": "1.0.8",
+  "convention": "reference (see docs/conventions.md)",
+  "legacy_file": "written"
+}

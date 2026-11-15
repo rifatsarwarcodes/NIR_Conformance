@@ -1,0 +1,274 @@
+[
+  {
+    "suite": "dt1",
+    "name": "affine"
+  },
+  {
+    "suite": "dt1",
+    "name": "linear"
+  },
+  {
+    "suite": "dt1",
+    "name": "li"
+  },
+  {
+    "suite": "dt1",
+    "name": "i"
+  },
+  {
+    "suite": "dt1",
+    "name": "lif"
+  },
+  {
+    "suite": "dt1",
+    "name": "lif_mixed_sign"
+  },
+  {
+    "suite": "dt1",
+    "name": "lif_hetero"
+  },
+  {
+    "suite": "dt1",
+    "name": "lif_r2"
+  },
+  {
+    "suite": "dt1",
+    "name": "lif_v_leak"
+  },
+  {
+    "suite": "dt1",
+    "name": "lif_v_reset"
+  },
+  {
+    "suite": "dt1",
+    "name": "lif_overshoot"
+  },
+  {
+    "suite": "dt1",
+    "name": "if"
+  },
+  {
+    "suite": "dt1",
+    "name": "if_mixed_sign"
+  },
+  {
+    "suite": "dt1",
+    "name": "if_v_reset"
+  },
+  {
+    "suite": "dt1",
+    "name": "cubalif"
+  },
+  {
+    "suite": "dt1",
+    "name": "cubalif_r_tau_dt"
+  },
+  {
+    "suite": "dt1",
+    "name": "cubalif_w_in"
+  },
+  {
+    "suite": "dt1",
+    "name": "cubalif_v_leak"
+  },
+  {
+    "suite": "dt1",
+    "name": "cubali"
+  },
+  {
+    "suite": "dt1",
+    "name": "scale"
+  },
+  {
+    "suite": "dt1",
+    "name": "threshold"
+  },
+  {
+    "suite": "dt1",
+    "name": "delay"
+  },
+  {
+    "suite": "dt1",
+    "name": "two_layer"
+  },
+  {
+    "suite": "dt1",
+    "name": "two_layer_affine"
+  },
+  {
+    "suite": "dt1",
+    "name": "recurrent_lif"
+  },
+  {
+    "suite": "dt1",
+    "name": "recurrent_cubalif"
+  },
+  {
+    "suite": "dt1",
+    "name": "fan_in"
+  },
+  {
+    "suite": "dt1",
+    "name": "conv2d"
+  },
+  {
+    "suite": "dt1",
+    "name": "conv2d_stride"
+  },
+  {
+    "suite": "dt1",
+    "name": "conv1d"
+  },
+  {
+    "suite": "dt1",
+    "name": "sumpool"
+  },
+  {
+    "suite": "dt1",
+    "name": "avgpool"
+  },
+  {
+    "suite": "dt1",
+    "name": "flatten"
+  },
+  {
+    "suite": "dt1",
+    "name": "conv_net"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "affine"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "linear"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "li"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "i"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "lif"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "lif_mixed_sign"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "lif_hetero"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "lif_r2"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "lif_v_leak"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "lif_v_reset"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "lif_overshoot"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "if"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "if_mixed_sign"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "if_v_reset"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "cubalif"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "cubalif_r_tau_dt"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "cubalif_w_in"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "cubalif_v_leak"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "cubali"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "scale"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "threshold"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "delay"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "two_layer"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "two_layer_affine"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "recurrent_lif"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "recurrent_cubalif"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "fan_in"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "conv2d"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "conv2d_stride"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "conv1d"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "sumpool"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "avgpool"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "flatten"
+  },
+  {
+    "suite": "dt1e-4",
+    "name": "conv_net"
+  }
+]
