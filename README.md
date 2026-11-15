@@ -57,13 +57,16 @@ verify_findings.py one direct check per claimed finding (invariance test, module
 ## Run it
 
 ```bash
-# one-time setup (uv, Python 3.11)
-uv venv --python 3.11 .venv-latest && uv pip install --python .venv-latest/bin/python "nir==1.0.8" "nirtorch==2.6" snntorch norse spyx numpy h5py pytest -e .
-uv venv --python 3.11 .venv-pinned && uv pip install --python .venv-pinned/bin/python nir nirtorch snntorch norse sinabs rockpool numpy h5py pytest -e .
-# (sinabs pulls nir down to 1.0.4 and nirtorch to 2.0.2 in the pinned env)
+# one-time setup (uv, Python 3.11): two environments with the exact versions tested
+uv venv --python 3.11 .venv-latest && uv pip install --python .venv-latest/bin/python -r requirements-latest.txt -e .
+uv venv --python 3.11 .venv-pinned && uv pip install --python .venv-pinned/bin/python -r requirements-pinned.txt -e .
 
 ./run_all.sh        # tests -> fixtures -> 7 framework runs -> compare -> verify (about 2 minutes on an M4)
 ```
+
+`requirements-latest.txt` holds nir 1.0.8, nirtorch 2.6, snnTorch, Norse and Spyx. `requirements-pinned.txt` holds nir 1.0.4 and nirtorch 2.0.2, plus Sinabs and Rockpool, which need that NIR version, and snnTorch and Norse again for comparison. A fresh clone set up this way reproduced the committed `results/matrix.md` byte for byte (macOS arm64, 2026-11-16). `results.json` and `results/verified/` also store repeat counts for flaky cells, and those vary from run to run by design.
+
+On Linux, add `--extra-index-url https://download.pytorch.org/whl/cpu --index-strategy unsafe-best-match` to get CPU-only torch wheels.
 
 The disk cost is mostly the two virtual environments, about 1.1 GB each. Fixtures and results together are about 14 MB.
 

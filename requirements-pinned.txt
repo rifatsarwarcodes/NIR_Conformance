@@ -1,0 +1,14 @@
+# Environment 2: nir 1.0.4, required because sinabs and rockpool[nir] pin nir<=1.0.4.
+nir==1.0.4
+nirtorch==2.0.2
+snntorch==1.0.0
+norse==1.1.0
+sinabs==3.1.3
+samna==0.49.0
+rockpool==3.1.0
+torch==2.15.0
+torchvision==0.29.2
+numpy==2.4.6
+h5py==3.16.0
+scipy==1.17.1
+pytest==9.2.0
