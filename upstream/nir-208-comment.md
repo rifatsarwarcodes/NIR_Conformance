@@ -32,4 +32,4 @@ I built a prototype of this to see what shared fixtures would catch. Sharing the
 
 **A design suggestion** from doing this. Fixtures only work if the expected outputs follow one stated convention. So I'd suggest the fixture `meta.json` (or NIR graph metadata) carry an explicit `dt` and convention block, and #208 decide the defaults for points 1–7. Divergent frameworks could then declare which points they deviate on, and the harness would check them against the matching variant.
 
-The full matrix, the per-framework findings with minimal repros, and the code are here: <LINK — to be added when published>. Happy to turn this into a PR in whatever layout you prefer, for example `tests/fixtures/<primitive>/` plus a pytest runner, once the conventions are agreed.
+The full matrix, the per-framework findings with minimal repros, and the code are here: https://github.com/rifatsarwarcodes/NIR_Conformance. Happy to turn this into a PR in whatever layout you prefer, for example `tests/fixtures/<primitive>/` plus a pytest runner, once the conventions are agreed.
