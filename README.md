@@ -1,5 +1,7 @@
 # NIR Conformance Suite
 
+[![conformance](https://github.com/rifatsarwarcodes/NIR_Conformance/actions/workflows/conformance.yml/badge.svg)](https://github.com/rifatsarwarcodes/NIR_Conformance/actions/workflows/conformance.yml)
+
 The Neuromorphic Intermediate Representation (NIR) is the file format SNN frameworks use to exchange models. This suite checks whether five frameworks give the same answer when they import the same `.nir` file. Each framework's output is compared with a slow, readable float64 reference simulator, and the suite explains every disagreement it finds.
 
 **Status (2026-11-16):** working prototype. The full pipeline runs in about 2 minutes on an M4 CPU.
@@ -65,6 +67,15 @@ uv venv --python 3.11 .venv-pinned && uv pip install --python .venv-pinned/bin/p
 ```
 
 `requirements-latest.txt` holds nir 1.0.8, nirtorch 2.6, snnTorch, Norse and Spyx. `requirements-pinned.txt` holds nir 1.0.4 and nirtorch 2.0.2, plus Sinabs and Rockpool, which need that NIR version, and snnTorch and Norse again for comparison. A fresh clone set up this way reproduced the committed `results/matrix.md` byte for byte (macOS arm64, 2026-11-16). `results.json` and `results/verified/` also store repeat counts for flaky cells, and those vary from run to run by design.
+
+CI ([.github/workflows/conformance.yml](.github/workflows/conformance.yml)) runs the full pipeline on Ubuntu on every push and every Monday, in two jobs:
+
+| Job | Versions | What makes it fail |
+|---|---|---|
+| `tested` | The pinned requirements | The pipeline breaks, or any finding in `docs/FINDINGS.md` stops reproducing |
+| `newest` | The same packages unpinned | Never fails the build; it is an early warning when a framework release changes behaviour |
+
+Both jobs upload the matrix and evidence as artifacts.
 
 On Linux, add `--extra-index-url https://download.pytorch.org/whl/cpu --index-strategy unsafe-best-match` to get CPU-only torch wheels.
 

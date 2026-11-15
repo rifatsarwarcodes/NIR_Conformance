@@ -1,0 +1,81 @@
+name: conformance
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 1" # Mondays 06:00 UTC: catches new framework releases in the `newest` job
+
+jobs:
+  conformance:
+    name: conformance (${{ matrix.deps }} dependencies)
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        # tested: the exact versions in requirements-*.txt; must stay green
+        # newest: the same packages unpinned; informational, never fails the build
+        deps: [tested, newest]
+    continue-on-error: ${{ matrix.deps == 'newest' }}
+    env:
+      # CPU-only torch wheels instead of the multi-GB CUDA build
+      UV_EXTRA_INDEX_URL: https://download.pytorch.org/whl/cpu
+      UV_INDEX_STRATEGY: unsafe-best-match
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install uv
+        run: python -m pip install uv
+
+      - name: Create the two environments
+        run: |
+          for env in latest pinned; do
+            req="requirements-$env.txt"
+            if [ "${{ matrix.deps }}" = "newest" ]; then
+              # drop exact pins; sinabs and rockpool still pull nir<=1.0.4 into the pinned env themselves
+              sed -E 's/==[^ ]*//' "$req" > "/tmp/$env.txt"
+              req="/tmp/$env.txt"
+            fi
+            uv venv --python "$(which python)" ".venv-$env"
+            uv pip install --python ".venv-$env/bin/python" -r "$req" -e .
+          done
+
+      - name: Show versions under test
+        run: |
+          for env in latest pinned; do
+            echo "== $env"
+            uv pip list --python ".venv-$env/bin/python" | grep -iE '^(nir|nirtorch|snntorch|norse|spyx|sinabs|rockpool|torch|jax|numpy) '
+          done
+
+      - name: Run the pipeline
+        run: ./run_all.sh
+
+      - name: Every documented finding still reproduces
+        run: |
+          if grep -h "NOT CONFIRMED" results/logs/verify-*.log; then
+            echo "::error::a finding in docs/FINDINGS.md no longer reproduces (fixed upstream?): update the docs and the check"
+            exit 1
+          fi
+
+      - name: Matrix drift against the committed results (informational)
+        run: |
+          git diff --stat -- results/matrix.md fixtures || true
+          git diff -- results/matrix.md | head -200 || true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: results-${{ matrix.deps }}
+          path: |
+            results/matrix.md
+            results/matrix.html
+            results/results.json
+            results/verified/
+            results/logs/
