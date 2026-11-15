@@ -93,6 +93,10 @@ upstream/            DRAFT issue texts + minimal repros (not posted)
 - **The reference convention is a choice.** Where the spec is silent, a framework can be marked DIFF without being wrong. `FINDINGS.md` labels those *ambiguity*.
 - **CPU only.**
 
+## License
+
+MIT. See [LICENSE](LICENSE).
+
 ## Next steps
 
 1. Review the drafts in `upstream/`, then post the #208 comment and agree on the fixture layout and conventions with the maintainers.
