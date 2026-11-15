@@ -1,0 +1,173 @@
+[
+  {
+    "id": "NT-3",
+    "framework": "nirtorch",
+    "claim": "With an unsupported node in the graph, nirtorch.load's result is not deterministic: repeated imports of the same file sometimes raise and sometimes run (with a wrong output), even with PYTHONHASHSEED fixed; graphs of supported nodes are stable",
+    "env": "nir1.0.4",
+    "framework_version": "2.0.2",
+    "evidence": "30 imports each, one process: norse/dt1/scale: {'ok:5e41b6': 15, 'error:RuntimeError': 15}; norse/dt1/delay: {'error:RuntimeError': 10, 'ok:57fa05': 20}; norse/dt1/two_layer: {'ok:4d8595': 30}; sinabs/dt1e-4/flatten: {'ok:976457': 25, 'error:RuntimeError': 5}",
+    "confirmed": true
+  },
+  {
+    "id": "ST-5",
+    "framework": "snntorch",
+    "claim": "Recurrent LIF graphs (LIF <-> Linear) fail to import",
+    "env": "nir1.0.4",
+    "framework_version": "1.0.0",
+    "evidence": "KeyError: 'module name can\\'t contain \".\", got: lif.input'",
+    "confirmed": true
+  },
+  {
+    "id": "NO-1",
+    "framework": "norse",
+    "claim": "LI, I, CubaLI and AvgPool2d have no importer and are silently dropped: no error, output equals the graph without that node",
+    "env": "nir1.0.4",
+    "framework_version": "1.1.0",
+    "evidence": "dropped without error: li, i, avgpool (output shape [2, 6, 6], pool missing)",
+    "confirmed": true
+  },
+  {
+    "id": "NO-2",
+    "framework": "norse",
+    "claim": "LIF `r` is ignored (only a logged warning)",
+    "env": "nir1.0.4",
+    "framework_version": "1.1.0",
+    "evidence": "lif_r2 output bit-identical with r=2 and r=1",
+    "confirmed": true
+  },
+  {
+    "id": "NO-4",
+    "framework": "norse",
+    "claim": "IF integration ignores dt (v += x per step) while LIF uses dt: the same IF graph gives identical output at dt=1 and dt=1e-4",
+    "env": "nir1.0.4",
+    "framework_version": "1.1.0",
+    "evidence": "IF spikes at dt=1 vs dt=1e-4 identical (171); LIF spikes differ (179 vs 0)",
+    "confirmed": true
+  },
+  {
+    "id": "NO-5",
+    "framework": "norse",
+    "claim": "Membranes start at v_leak, not 0 (NIR does not specify the initial state)",
+    "env": "nir1.0.4",
+    "framework_version": "1.1.0",
+    "evidence": "lif_v_leak output equals the reference started at v=v_leak, exactly",
+    "confirmed": true
+  },
+  {
+    "id": "NO-6",
+    "framework": "norse",
+    "claim": "CubaLIF: the synaptic current is given the membrane's v_leak, so with v_leak != 0 a neuron with no input spikes",
+    "env": "nir1.0.4",
+    "framework_version": "1.1.0",
+    "evidence": "zero input, v_leak=0.6, threshold=1: reference 0 spikes (v settles at 0.6); Norse 24 spikes",
+    "confirmed": true
+  },
+  {
+    "id": "NO-7",
+    "framework": "norse",
+    "claim": "nir.Flatten dims are used as torch dims (batch included), so Flatten(start_dim=0) -> Linear crashes",
+    "env": "nir1.0.4",
+    "framework_version": "1.1.0",
+    "evidence": "RuntimeError: mm: mat1 and mat2 shapes cannot be multiplied (1x36 and 18x8)",
+    "confirmed": true
+  },
+  {
+    "id": "NO-8",
+    "framework": "norse",
+    "claim": "nir.Conv1d is not supported (crashes at run time)",
+    "env": "nir1.0.4",
+    "framework_version": "1.1.0",
+    "evidence": "RuntimeError: The size of tensor a (2) must match the size of tensor b (3) at non-singleton dimension 1",
+    "confirmed": true
+  },
+  {
+    "id": "SB-1",
+    "framework": "sinabs",
+    "claim": "sinabs pins nir<=1.0.4, so it cannot read LIF/IF/CubaLIF files written by current NIR",
+    "env": "nir1.0.4",
+    "framework_version": "3.1.3",
+    "evidence": "requires ['nir<=1.0.4', 'nirtorch']; nir 1.0.4 reading a nir-1.0.8 LIF file: TypeError: LIF.__init__() got an unexpected keyword argument 'v_reset'",
+    "confirmed": true
+  },
+  {
+    "id": "SB-2",
+    "framework": "sinabs",
+    "claim": "nir.Linear (bias-free weights, which snnTorch/Norse/Spyx export) has no importer",
+    "env": "nir1.0.4",
+    "framework_version": "3.1.3",
+    "evidence": "ValueError: Cannot find the input of an empty graph",
+    "confirmed": true
+  },
+  {
+    "id": "SB-3",
+    "framework": "sinabs",
+    "claim": "nir.Conv1d import crashes: it calls .detach() on the numpy weight array",
+    "env": "nir1.0.4",
+    "framework_version": "3.1.3",
+    "evidence": "AttributeError: 'numpy.ndarray' object has no attribute 'detach'",
+    "confirmed": true
+  },
+  {
+    "id": "SB-4",
+    "framework": "sinabs",
+    "claim": "IF is imported with multi-spike output and reset-by-subtraction (NIR: at most one spike per step, reset to v_reset)",
+    "env": "nir1.0.4",
+    "framework_version": "3.1.3",
+    "evidence": "conv2d->IF output equals reference with reset=subtract, multispike=True; max spikes/step = 2",
+    "confirmed": true
+  },
+  {
+    "id": "SB-5",
+    "framework": "sinabs",
+    "claim": "Recurrent edges are silently ignored (output unchanged when the recurrent weights are zeroed)",
+    "env": "nir1.0.4",
+    "framework_version": "3.1.3",
+    "evidence": "recurrent_lif output bit-identical with recurrent weights zeroed",
+    "confirmed": true
+  },
+  {
+    "id": "SB-6",
+    "framework": "sinabs",
+    "claim": "LIF `r` is ignored without warning (LI checks r == 1, LIF does not)",
+    "env": "nir1.0.4",
+    "framework_version": "3.1.3",
+    "evidence": "Affine->LIF output bit-identical with r=2 and r=1",
+    "confirmed": true
+  },
+  {
+    "id": "RP-1",
+    "framework": "rockpool",
+    "claim": "nir.LIF import always crashes: the importer reads node.tau_mem, but nir.LIF's field is `tau`",
+    "env": "nir1.0.4",
+    "framework_version": "3.1.0",
+    "evidence": "AttributeError: 'LIF' object has no attribute 'tau_mem'",
+    "confirmed": true
+  },
+  {
+    "id": "RP-2",
+    "framework": "rockpool",
+    "claim": "nir.LI time constants are truncated to integers (tau.int()): tau = 2e-3 s becomes 0",
+    "env": "nir1.0.4",
+    "framework_version": "3.1.0",
+    "evidence": "file tau = 0.002; imported ExpSynTorch.tau = 0.0",
+    "confirmed": true
+  },
+  {
+    "id": "RP-3",
+    "framework": "rockpool",
+    "claim": "The simulation dt is inferred as min(tau / (1 + r)) instead of being given; with r = 1 it is tau/2",
+    "env": "nir1.0.4",
+    "framework_version": "3.1.0",
+    "evidence": "file intends dt = 1 (tau_mem = 20 steps, r = 1); imported LIFTorch.dt = 10.0",
+    "confirmed": true
+  },
+  {
+    "id": "RP-4",
+    "framework": "rockpool",
+    "claim": "No importer for IF, I, Conv1d/Conv2d, Flatten, Delay or Threshold",
+    "env": "nir1.0.4",
+    "framework_version": "3.1.0",
+    "evidence": "NotImplementedError for: nir.ir.neuron.IF, nir.ir.neuron.I, nir.ir.conv.Conv2d, nir.ir.conv.Conv1d, nir.ir.flatten.Flatten, nir.ir.delay.Delay, nir.ir.surrogate_gradient.Threshold",
+    "confirmed": true
+  }
+]

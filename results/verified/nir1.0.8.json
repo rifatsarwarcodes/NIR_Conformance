@@ -1,0 +1,236 @@
+[
+  {
+    "id": "NIR-1",
+    "framework": "nir",
+    "claim": "Conv1d/Conv2d input_type ignores `groups`: input channels are taken as weight.shape[1] (= C_in/groups), so a valid grouped conv fails graph type inference",
+    "env": "nir1.0.8",
+    "framework_version": "1.0.8",
+    "evidence": "Conv2d(weight (4,2,3,3), groups=2).input_type = [2, 7, 7] (should start with 4); building Input([4,7,7])->conv raises ValueError: Type inference error: type mismatch: input.output: [[4 7 7]] -> c.input: [[2 7",
+    "confirmed": true
+  },
+  {
+    "id": "NIR-2",
+    "framework": "nir",
+    "claim": "nir >= 1.0.6 always serialises `v_reset` for LIF/IF/CubaLIF, even when it was not given; nir <= 1.0.4 rejects the key, so older readers cannot load any spiking-neuron file from current NIR",
+    "env": "nir1.0.8",
+    "framework_version": "1.0.8",
+    "evidence": "LIF built without v_reset is written with keys ['r', 'tau', 'type', 'v_leak', 'v_reset', 'v_threshold']",
+    "confirmed": true
+  },
+  {
+    "id": "NIR-3",
+    "framework": "nir",
+    "claim": "A .nir file stores no time step; every importer picks its own dt (see capability table)",
+    "env": "nir1.0.8",
+    "framework_version": "1.0.8",
+    "evidence": "datasets in a LIF graph file: ['node/nodes/lif', 'node/nodes/lif/r', 'node/nodes/lif/tau', 'node/nodes/lif/type', 'node/nodes/lif/v_leak', 'node/nodes/lif/v_reset', 'node/nodes/lif/v_threshold']",
+    "confirmed": true
+  },
+  {
+    "id": "NT-1",
+    "framework": "nirtorch",
+    "claim": "nirtorch.load (legacy GraphExecutor, used by Norse, Sinabs, Rockpool): execution order is not topological for fan-in graphs, and the executor returns the last-executed node, so a fan-in graph returns one branch's Linear output instead of the neuron's spikes",
+    "env": "nir1.0.8",
+    "framework_version": "2.6",
+    "evidence": "execution order ['input', 'fc_a', 'lif', 'output', 'fc_b']; model output == fc_b(x) (a Linear output, not spikes)",
+    "confirmed": true
+  },
+  {
+    "id": "NT-2",
+    "framework": "nirtorch",
+    "claim": "nirtorch.load silently skips nodes the importer cannot map (returns None): no error, the node is absent from the execution order and the output is wrong",
+    "env": "nir1.0.8",
+    "framework_version": "2.6",
+    "evidence": "Linear->LI graph imports without error; execution order ['input', 'fc']",
+    "confirmed": true
+  },
+  {
+    "id": "NT-3",
+    "framework": "nirtorch",
+    "claim": "With an unsupported node in the graph, nirtorch.load's result is not deterministic: repeated imports of the same file sometimes raise and sometimes run (with a wrong output), even with PYTHONHASHSEED fixed; graphs of supported nodes are stable",
+    "env": "nir1.0.8",
+    "framework_version": "2.6",
+    "evidence": "30 imports each, one process: norse/dt1/scale: {'error:RuntimeError': 13, 'ok:5e41b6': 17}; norse/dt1/delay: {'ok:57fa05': 18, 'error:RuntimeError': 12}; norse/dt1/two_layer: {'ok:4d8595': 30}",
+    "confirmed": true
+  },
+  {
+    "id": "ST-1",
+    "framework": "snntorch",
+    "claim": "LIF/CubaLIF import hardcodes dt = 1e-4 s, so time constants in any other unit give wrong dynamics (no dt argument)",
+    "env": "nir1.0.8",
+    "framework_version": "1.0.0",
+    "evidence": "tau=20 with dt=1 should give beta=0.95; imported Leaky.beta=0.999995 (= 1 - 1e-4/20)",
+    "confirmed": true
+  },
+  {
+    "id": "ST-2",
+    "framework": "snntorch",
+    "claim": "nir.IF is imported as a *leaky* neuron: snn.Leaky(beta=0.9, reset_mechanism='subtract', init_hidden=False); its output is a (spk, mem) tuple, which breaks any layer after it",
+    "env": "nir1.0.8",
+    "framework_version": "1.0.0",
+    "evidence": "IF -> Leaky(beta=0.90, reset=subtract, init_hidden=False); Conv->IF->SumPool2d raises AttributeError: 'tuple' object has no attribute 'pow'",
+    "confirmed": true
+  },
+  {
+    "id": "ST-3",
+    "framework": "snntorch",
+    "claim": "v_reset is ignored: LIF is always imported with reset_mechanism='zero'",
+    "env": "nir1.0.8",
+    "framework_version": "1.0.0",
+    "evidence": "v_reset=-0.5*thr imported as reset_mechanism='zero'; output bit-identical with v_reset=0",
+    "confirmed": true
+  },
+  {
+    "id": "ST-4",
+    "framework": "snntorch",
+    "claim": "nir.Flatten start/end dims are passed to torch.nn.Flatten unchanged, but NIR dims exclude the batch dimension: start_dim=0 flattens the batch",
+    "env": "nir1.0.8",
+    "framework_version": "1.0.0",
+    "evidence": "torch Flatten(start_dim=0); running raises RuntimeError: mm: mat1 and mat2 shapes cannot be multiplied ",
+    "confirmed": true
+  },
+  {
+    "id": "ST-5",
+    "framework": "snntorch",
+    "claim": "Recurrent LIF graphs (LIF <-> Linear) fail to import",
+    "env": "nir1.0.8",
+    "framework_version": "1.0.0",
+    "evidence": "AttributeError: 'GraphModule' object has no attribute 'items'",
+    "confirmed": true
+  },
+  {
+    "id": "ST-6",
+    "framework": "snntorch",
+    "claim": "Import rejects per-neuron thresholds, v_leak != 0, and CubaLIF with r != tau_mem/dt",
+    "env": "nir1.0.8",
+    "framework_version": "1.0.0",
+    "evidence": "lif_hetero: AssertionError: v_threshold must be same for all neurons | lif_v_leak: AssertionError: v_leak not supported | cubalif: AssertionError: r not supported in CubaLIF",
+    "confirmed": true
+  },
+  {
+    "id": "NO-1",
+    "framework": "norse",
+    "claim": "LI, I, CubaLI and AvgPool2d have no importer and are silently dropped: no error, output equals the graph without that node",
+    "env": "nir1.0.8",
+    "framework_version": "1.1.0",
+    "evidence": "dropped without error: li, i, cubali, avgpool (output shape [2, 6, 6], pool missing)",
+    "confirmed": true
+  },
+  {
+    "id": "NO-2",
+    "framework": "norse",
+    "claim": "LIF `r` is ignored (only a logged warning)",
+    "env": "nir1.0.8",
+    "framework_version": "1.1.0",
+    "evidence": "lif_r2 output bit-identical with r=2 and r=1",
+    "confirmed": true
+  },
+  {
+    "id": "NO-3",
+    "framework": "norse",
+    "claim": "`v_reset` is ignored: neurons reset to 0",
+    "env": "nir1.0.8",
+    "framework_version": "1.1.0",
+    "evidence": "lif_v_reset output bit-identical with v_reset=-0.5*thr and v_reset=0",
+    "confirmed": true
+  },
+  {
+    "id": "NO-4",
+    "framework": "norse",
+    "claim": "IF integration ignores dt (v += x per step) while LIF uses dt: the same IF graph gives identical output at dt=1 and dt=1e-4",
+    "env": "nir1.0.8",
+    "framework_version": "1.1.0",
+    "evidence": "IF spikes at dt=1 vs dt=1e-4 identical (171); LIF spikes differ (179 vs 0)",
+    "confirmed": true
+  },
+  {
+    "id": "NO-5",
+    "framework": "norse",
+    "claim": "Membranes start at v_leak, not 0 (NIR does not specify the initial state)",
+    "env": "nir1.0.8",
+    "framework_version": "1.1.0",
+    "evidence": "lif_v_leak output equals the reference started at v=v_leak, exactly",
+    "confirmed": true
+  },
+  {
+    "id": "NO-6",
+    "framework": "norse",
+    "claim": "CubaLIF: the synaptic current is given the membrane's v_leak, so with v_leak != 0 a neuron with no input spikes",
+    "env": "nir1.0.8",
+    "framework_version": "1.1.0",
+    "evidence": "zero input, v_leak=0.6, threshold=1: reference 0 spikes (v settles at 0.6); Norse 24 spikes",
+    "confirmed": true
+  },
+  {
+    "id": "NO-7",
+    "framework": "norse",
+    "claim": "nir.Flatten dims are used as torch dims (batch included), so Flatten(start_dim=0) -> Linear crashes",
+    "env": "nir1.0.8",
+    "framework_version": "1.1.0",
+    "evidence": "RuntimeError: mm: mat1 and mat2 shapes cannot be multiplied (1x36 and 18x8)",
+    "confirmed": true
+  },
+  {
+    "id": "NO-8",
+    "framework": "norse",
+    "claim": "nir.Conv1d is not supported (crashes at run time)",
+    "env": "nir1.0.8",
+    "framework_version": "1.1.0",
+    "evidence": "RuntimeError: The size of tensor a (2) must match the size of tensor b (3) at non-singleton dimension 1",
+    "confirmed": true
+  },
+  {
+    "id": "SX-1",
+    "framework": "spyx",
+    "claim": "Spikes are reported one step late: a neuron's step-t output is computed from its membrane *before* the step-t update",
+    "env": "nir1.0.8",
+    "framework_version": "1.0.0",
+    "evidence": "input at t=0 only: reference spikes [1, 0, 0, 0, 0], Spyx [0, 1, 1, 1, 1]",
+    "confirmed": true
+  },
+  {
+    "id": "SX-2",
+    "framework": "spyx",
+    "claim": "LIF `r`, `v_leak` and `v_reset` are all ignored",
+    "env": "nir1.0.8",
+    "framework_version": "1.0.0",
+    "evidence": "outputs bit-identical when each is reset to its default: r, v_leak, v_reset",
+    "confirmed": true
+  },
+  {
+    "id": "SX-3",
+    "framework": "spyx",
+    "claim": "Only the first branch of a non-chain graph is imported: other branches are dropped without error",
+    "env": "nir1.0.8",
+    "framework_version": "1.0.0",
+    "evidence": "fan_in output bit-identical with the second branch's weights zeroed",
+    "confirmed": true
+  },
+  {
+    "id": "SX-4",
+    "framework": "spyx",
+    "claim": "Scale, Delay, I, CubaLI and AvgPool2d are silently dropped",
+    "env": "nir1.0.8",
+    "framework_version": "1.0.0",
+    "evidence": "Scale x3 and Delay -> 0 leave output bit-identical; I output == its input; AvgPool2d output shape [2, 6, 6] (pool missing)",
+    "confirmed": true
+  },
+  {
+    "id": "SX-5",
+    "framework": "spyx",
+    "claim": "Flatten after a conv flattens in Spyx's channels-last (H, W, C) order, but NIR's following weights expect channels-first (C, H, W) order",
+    "env": "nir1.0.8",
+    "framework_version": "1.0.0",
+    "evidence": "output equals Spyx(Linear->LIF) on the input flattened as (H,W,C), not as NIR's (C,H,W)",
+    "confirmed": true
+  },
+  {
+    "id": "SX-6",
+    "framework": "spyx",
+    "claim": "nir.Conv1d import fails (shape error at run time)",
+    "env": "nir1.0.8",
+    "framework_version": "1.0.0",
+    "evidence": "TypeError: add got incompatible shapes for broadcasting: (2, 3, 10), (2, 2, 10).",
+    "confirmed": true
+  }
+]
