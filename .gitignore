@@ -1,0 +1,10 @@
+.venv-latest/
+.venv-pinned/
+__pycache__/
+*.egg-info/
+.pytest_cache/
+results/raw/
+results/logs/
+results/run_all.out
+# personal planning notes, kept local
+docs/BRIEF.md

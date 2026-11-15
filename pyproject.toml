@@ -1,0 +1,13 @@
+[project]
+name = "nirconf"
+version = "0.1.0"
+description = "Conformance fixtures and cross-framework harness for the Neuromorphic Intermediate Representation (NIR)"
+requires-python = ">=3.10"
+dependencies = ["nir", "numpy", "h5py"]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
